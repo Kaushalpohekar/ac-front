@@ -1,0 +1,25 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #337031;
+}
+
+.navbar-logo {
+  margin-right: 1rem;
+}
+
+.navbar-logo-img{
+	height: 60px;
+	width: auto;
+}
+
+.navbar-title {
+  flex: 1; /* This will make the title take the available space in the center */
+  text-align: center;
+  color: whitesmoke;
+}
+
+.navbar-logout {
+  margin-left: 1rem;
+  color: whitesmoke; }

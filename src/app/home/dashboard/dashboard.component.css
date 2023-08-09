@@ -1,0 +1,71 @@
+.device-title {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.custom-slide-toggle {
+  transform: scale(1.2); /* Adjust the scale value as needed */
+}
+
+.header {
+  background-color: #c4f7bc;
+}
+
+
+.turn-on-off{
+	font-size: 16px;
+	font-weight: 550;
+}
+
+.status{
+	font-size: 17px;
+	font-weight: 550;
+}
+
+.device-off{
+	background-color: /*#facbc0*/#f7f6c1;
+}
+
+.led-container {
+  display: flex;
+  align-items: center;
+}
+
+.led {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 5px;
+  border: 1px solid white; /* Border around the LED */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Add a shadow for space */
+}
+
+.red {
+  background-color: #f56642;
+}
+
+.green {
+  background-color: #74c967;
+}
+
+.gray {
+  background-color: gray;
+}
+
+@keyframes blink-red {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+@keyframes blink-green {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.red.blinking {
+  animation: blink-red 1s infinite;
+}
+
+.green.blinking {
+  animation: blink-green 1s infinite;
+}

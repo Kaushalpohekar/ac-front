@@ -1,4 +1,33 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~bootstrap/dist/css/bootstrap.min.css';
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+/* styles.css */
+@media screen and (max-width: 768px) {
+  .sidebar {
+    display: none;
+  }
+
+  .content {
+    margin-left: 0;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  .sidebar {
+    width: 300px;
+    background-color: #f0f0f0;
+    position: fixed;
+    top: 64px; /* Adjust this value depending on your header's height */
+    bottom: 0;
+    left: 0;
+    overflow-y: auto;
+  }
+
+  .content {
+    margin-left: 300px;
+  }
+}

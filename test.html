@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>MQTT Subscription Test</title>
+</head>
+
+<body>
+  <h1>MQTT Subscription Test</h1>
+  <div id="messages"></div>
+
+  <h2>Subscribed Topics and Payloads:</h2>
+  <ul id="subscribedTopics"></ul>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.2/mqttws31.min.js"></script>
+  <script>
+    const brokerOptions = {
+      hostname: 'broker.emqx.io',
+      port: 8083,
+      protocol: 'ws',
+      path: '/mqtt',
+    };
+
+    const topic = 'sense/live';
+    const messagesDiv = document.getElementById('messages');
+    const subscribedTopicsList = document.getElementById('subscribedTopics');
+
+    // Create a unique client ID
+    const clientId = 'client_' + Math.random().toString(16).substr(2, 8);
+
+    // Create a client instance
+    const client = new Paho.MQTT.Client(brokerOptions.hostname, brokerOptions.port, brokerOptions.path, clientId);
+
+    // Set callback handlers
+    client.onConnectionLost = onConnectionLost;
+    client.onMessageArrived = onMessageArrived;
+
+    // Connect the client
+    client.connect({
+      onSuccess: onConnect,
+      useSSL: brokerOptions.protocol === 'wss',
+    });
+
+    // Called when the client connects
+    function onConnect() {
+      console.log('Connected to MQTT broker');
+      // Subscribe to the topic
+      client.subscribe(topic);
+    }
+
+    // Called when the client loses its connection
+    function onConnectionLost(responseObject) {
+      if (responseObject.errorCode !== 0) {
+        console.log('Connection lost:', responseObject.errorMessage);
+      }
+    }
+
+    // Called when a message arrives
+    function onMessageArrived(message) {
+      console.log('Received payload:', message.payloadString);
+      const newMessage = document.createElement('p');
+      newMessage.textContent = message.payloadString;
+      messagesDiv.appendChild(newMessage);
+
+      // Display subscribed topic and payload
+      const topicPayload = document.createElement('li');
+      topicPayload.textContent = `Topic: ${message.destinationName}, Payload: ${message.payloadString}`;
+      subscribedTopicsList.appendChild(topicPayload);
+    }
+  </script>
+</body>
+
+</html>

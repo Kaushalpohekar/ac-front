@@ -1,0 +1,43 @@
+<app-navbar></app-navbar>
+
+<div class="container-fluid">
+  <div class="row pt-2">
+    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
+      <mat-card>
+        <mat-card-header class="header">
+          <div class="col-12 d-flex mb-2">
+            <div class="device-title">Device Name</div>
+            <div class="ms-auto device-title">{{ currentTime$ | async }}</div>
+          </div>
+        </mat-card-header>
+        <mat-card-content class="device-off">
+        	<div class="container">
+        		<div class="row pt-2">
+        			<div class="col-9">
+        				<div class="turn-on-off">Turn ON and OFF</div>
+        			</div>
+        			<div class="col-3">
+        				<mat-slide-toggle class="custom-slide-toggle" [checked]="toggleButtonChecked" (change)="onToggleChange($event)"></mat-slide-toggle>
+        			</div>
+              <div class="col-12">
+               <!--  <div id="columnChartContainer"> -->
+              </div>
+        		</div>
+        		<div class="row pt-2">
+        			<div class="col-9">
+        				<div class="status">{{ Status === 'on' ? 'Device is currently ON' : 'Device is currently OFF' }}</div>
+        			</div>
+        			<div class="col-3">
+                <div class="led-container">
+                  <div class="led" [ngClass]="{'red': Status === 'off', 'green': Status === 'on', 'blinking': Status === 'off'}"></div>
+                </div>
+        			</div>
+        		</div>
+        	</div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>
