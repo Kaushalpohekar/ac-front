@@ -11,7 +11,6 @@ import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './home/dashboard/dashboard.component';
 import { NavbarComponent } from './home/navbar/navbar.component';
 import { FooterComponent } from './home/footer/footer.component';
-import { CardsComponent } from './home/cards/cards.component';
 
 
 const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
@@ -27,8 +26,7 @@ const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
     LoginComponent,
     DashboardComponent,
     NavbarComponent,
-    FooterComponent,
-    CardsComponent
+    FooterComponent
   ],
   imports: [
     BrowserModule,
