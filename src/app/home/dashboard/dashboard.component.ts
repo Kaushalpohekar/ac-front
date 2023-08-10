@@ -295,59 +295,58 @@ export class DashboardComponent implements OnInit, OnDestroy {
       }] as any
     } as Highcharts.Options);
   }*/
-createChart() {
-  this.ControlService.graph().subscribe(
-    (data) => {
-      const onTimeHours = Math.floor(data.on / 60);
-      const onTimeMinutes = Math.round(data.on % 60);
-      const offTimeHours = Math.floor(data.off / 60);
-      const offTimeMinutes = Math.round(data.off % 60);
+  createChart() {
+    this.ControlService.graph().subscribe(
+      (data) => {
+        const onTimeHours = Math.floor(data.on / 60);
+        const onTimeMinutes = Math.round(data.on % 60);
+        const offTimeHours = Math.floor(data.off / 60);
+        const offTimeMinutes = Math.round(data.off % 60);
 
-      Highcharts.chart('columnChart', {
-        chart: {
-          type: 'column'
-        },
-        title: {
-          text: ''
-        },
-        credits: {
-          enabled: false
-        },
-        exporting: {
-          enabled: false
-        },
-        xAxis: {
-          categories: ['Time']
-        },
-        yAxis: {
+        Highcharts.chart('columnChart', {
+          chart: {
+            type: 'column'
+          },
           title: {
             text: ''
           },
-          min: 0,
-          max: 20
-        },
-        tooltip: {
-          formatter: function () {
-            if (this.y !== null && this.y !== undefined) {
-              const hours = Math.floor(this.y);
-              const minutes = Math.round((this.y - hours) * 60);
-              return `<b>${this.series.name}</b>: ${hours}h ${minutes}m`;
+          credits: {
+            enabled: false
+          },
+          exporting: {
+            enabled: false
+          },
+          xAxis: {
+            categories: ['Time']
+          },
+          yAxis: {
+            title: {
+              text: ''
+            },
+            min: 0,
+            max: 20
+          },
+          tooltip: {
+            formatter: function () {
+              if (this.y !== null && this.y !== undefined) {
+                const hours = Math.floor(this.y);
+                const minutes = Math.round((this.y - hours) * 60);
+                return `<b>${this.series.name}</b>: ${hours}h ${minutes}m`;
+              }
+              return '';
             }
-            return '';
-          }
-        },
-        colors: ['#31c458', '#f54c57'], // Green for 'On', Red for 'Off'
-        series: [{
-          name: 'On', // 'On' series
-          data: [onTimeHours + onTimeMinutes / 60],
-        }, {
-          name: 'Off', // 'Off' series
-          data: [offTimeHours + offTimeMinutes / 60],
-        }] as any
-      } as Highcharts.Options);
-    }
-  );
-}
-
+          },
+          colors: ['#31c458', '#f54c57'], // Green for 'On', Red for 'Off'
+          series: [{
+            name: 'On', // 'On' series
+            data: [onTimeHours + onTimeMinutes / 60],
+          }, {
+            name: 'Off', // 'Off' series
+            data: [offTimeHours + offTimeMinutes / 60],
+          }] as any
+        } as Highcharts.Options);
+      }
+    );
+  }
 
 }

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ControlService } from '../control.service';
 
 @Component({
   selector: 'app-navbar',
@@ -7,7 +8,9 @@ import { Component } from '@angular/core';
 })
 export class NavbarComponent {
 
-  logout(){
-    
+  constructor(private ControlService: ControlService) {}
+
+  logout() {
+    this.ControlService.logout();
   }
 }
