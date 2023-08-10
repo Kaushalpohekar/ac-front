@@ -19,9 +19,6 @@
         			<div class="col-3">
         				<mat-slide-toggle class="custom-slide-toggle" [checked]="toggleButtonChecked" (change)="onToggleChange($event)"></mat-slide-toggle>
         			</div>
-              <div class="col-12">
-               <!--  <div id="columnChartContainer"> -->
-              </div>
         		</div>
         		<div class="row pt-2">
         			<div class="col-9">
@@ -34,6 +31,11 @@
         			</div>
         		</div>
         	</div>
+          <div class="row pt-2">
+              <div class="col-12">
+          <div id="columnChart" class="chart-container" style="height: 200px;"></div>
+        </div>
+      </div>
         </mat-card-content>
       </mat-card>
     </div>
