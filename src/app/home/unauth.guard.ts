@@ -12,14 +12,18 @@ export class UnauthGuard implements CanActivate {
 
 
   canActivate(): boolean {
-    if (this.ControlService.isLoggedIn()) {
-      // User is already logged in, redirect to the respective dashboard based on user type
-      this.router.navigate(['/d']);
-      return false; 
-    }
-
-    // User is not logged in, allow access to the login page
-    return true;
+  console.log('UnauthGuard is being triggered');
+  const isLoggedIn = this.ControlService.isLoggedIn();
+  const storedToken = sessionStorage.getItem('token');
+  if (isLoggedIn && storedToken) {
+    console.log('Redirecting to dashboard');
+    this.router.navigate(['/d']);
+    return false; 
   }
+
+  console.log('Allowing access to login page');
+  return true;
+}
+
   
 }

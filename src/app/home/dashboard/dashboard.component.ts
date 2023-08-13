@@ -1,172 +1,24 @@
-/*import { Component, OnInit, OnDestroy } from '@angular/core';
-import { interval, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { MqttService, IMqttMessage } from 'ngx-mqtt';
-import { Subscription } from 'rxjs';
-import { ControlService } from '../control.service';
-import * as Highcharts from 'highcharts';
-import HighchartsMore from 'highcharts/highcharts-more';
-HighchartsMore(Highcharts);
-
-@Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
-})
-export class DashboardComponent implements OnInit, OnDestroy {
-  currentTime$!: Observable<string>;
-  mqttSubscriptions: Subscription[] = [];
-  Status!: string;
-  toggleButtonChecked: boolean = false;
-
-  constructor(private mqttService: MqttService, private ControlService: ControlService) {}
-
-  ngOnInit() {
-    this.currentTime$ = interval(1000).pipe(map(() => this.getCurrentTime()));
-
-    // Subscribe to the MQTT connection status observable
-    this.mqttSubscriptions.push(
-      this.mqttService.onConnect.subscribe((connectionStatus) => {
-        console.log('Connected to broker:', connectionStatus);
-      })
-    );
-
-    this.StatusButton();
-    this.createChart();
-
-    // Subscribe to the MQTT message observable
-    this.mqttSubscriptions.push(
-      this.mqttService.observe('sense/live').subscribe((message: IMqttMessage) => {
-        console.log('Received payload:', message.payload.toString());
-      })
-    );
-  }
-
-  private getCurrentTime(): string {
-    const now = new Date();
-    return (
-      this.formatMonth(now.getMonth()) +
-      ', ' +
-      this.formatTime(now.getDate()) +
-      ' ' +
-      now.getFullYear() +
-      ' ' +
-      this.formatTime(now.getHours()) +
-      ':' +
-      this.formatTime(now.getMinutes()) +
-      ':' +
-      this.formatTime(now.getSeconds())
-    );
-  }
-
-  private formatMonth(value: number): string {
-    const months = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-    ];
-    return months[value];
-  }
-
-  private formatTime(value: number): string {
-    return value.toString().padStart(2, '0');
-  }
-
-  StatusButton(){
-    this.ControlService.status().subscribe(
-      (result) => {
-        const status = result[0].ledState;
-        console.log(status);
-        this.Status = status; // Store the status in the component property
-
-        // Set the toggle button state based on the status
-        if (status === 'on') {
-          this.toggleButtonChecked = true;
-        } else if (status === 'off') {
-          this.toggleButtonChecked = false;
-        }
-      },
-      (error) => {}
-    );
-  }
-
-  onToggleChange(event: any): void {
-    const topic = 'sense/live'; // Replace this with your desired topic
-    const payload = event.checked ? 'on' : 'off';
-    
-    try {
-      this.mqttService.publish(topic, payload).subscribe({
-        next: () => {
-          this.Status = payload;
-        },
-        error: (error) => {
-          console.error("Error occurred while publishing:", error);
-        }
-      });
-    } catch (error) {
-      console.error("Error occurred while publishing:", error);
-    }
-  }
-
-
-  ngOnDestroy() {
-    // Unsubscribe from any active MQTT subscriptions
-    this.mqttSubscriptions.forEach((sub) => sub.unsubscribe());
-    // Disconnect the MQTT service from the broker
-    this.mqttService.disconnect();
-  }
-
-  createChart() {
-    Highcharts.chart('curvedLineChart', {
-      chart: {
-        type: 'spline'
-      },
-      title: {
-        text: ''
-      },
-      credits: {
-            enabled: false // Disable the credits display
-          },
-
-      xAxis: {
-        type: 'datetime',
-        timezoneOffset: 330
-      },
-      yAxis: {
-        title: {
-          text: 'Temperature'
-        },
-        min: 0,
-        max: 100,
-      },
-      series: [{
-        name: 'Temperature',
-        color: {
-          linearGradient: {
-            x1: 0,
-            x2: 0,
-            y1: 0,
-            y2: 1
-          },
-          stops: [
-            [0, 'rgba(255, 0, 0, 1)'],    // Start color (red)
-            [1, 'rgba(255, 255, 0, 0.3)'] // End color (yellow)
-          ]
-        },
-        data: [10,20,30,50,25,24]
-      }] as any
-    } as Highcharts.Options);
-  }
-}*/
-
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { interval, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MqttService, IMqttMessage } from 'ngx-mqtt';
 import { Subscription } from 'rxjs';
 import { ControlService } from '../control.service';
-import * as Highcharts from 'highcharts';
+import { DatePipe } from '@angular/common';
+/*import * as Highcharts from 'highcharts';
 import HighchartsExporting from 'highcharts/modules/exporting';
-HighchartsExporting(Highcharts);
+HighchartsExporting(Highcharts);*/
+
+export interface StatusData {
+  id: any;
+  deviceID: string;
+  statIPAddress: any;
+  ledState: string;
+  date_time:any;
+  idle: any;
+  formattedDate: string | null;
+}
+
 
 @Component({
   selector: 'app-dashboard',
@@ -181,7 +33,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
   onTime!: any;
   offTime!: any;
 
-  constructor(private mqttService: MqttService, private ControlService: ControlService) {}
+  displayedColumns: string[] = ['formattedDate', 'ledState'];
+  dataSource : StatusData[] = [];
+
+  constructor(private mqttService: MqttService, private ControlService: ControlService, private datePipe: DatePipe) {}
 
   ngOnInit() {
     this.currentTime$ = interval(1000).pipe(map(() => this.getCurrentTime()));
@@ -193,7 +48,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     );
 
     this.StatusButton();
-    this.createChart();
+    this.lastStatus();
+    //this.createChart();
   }
 
   private getCurrentTime(): string {
@@ -241,8 +97,58 @@ export class DashboardComponent implements OnInit, OnDestroy {
     );
   }
 
+  lastStatus() {
+    this.ControlService.lastStatus().subscribe(
+      (ledState) => {
+        console.log(ledState);
+        this.dataSource = ledState;
+        this.dataSource = ledState.map((ledState: StatusData) => {
+          ledState.formattedDate = this.datePipe.transform(ledState.date_time, 'MMM d y HH:mm:ss');
+          return ledState;
+        });
+      },
+      (error) =>{
+        console.log("Entries Not fetched properly!");
+      }
+    );
+  }
+  /*lastStatus() {
+    this.ControlService.lastStatus().subscribe(
+      (ledStateList) => {
+        // Format timestamps and calculate idle times
+        this.dataSource = ledStateList.map((ledState: StatusData) => {
+          ledState.formattedDate = this.datePipe.transform(ledState.date_time, 'MMM d y HH:mm:ss');
+          return ledState;
+        });
+
+        // Calculate and format idle times
+        for (let i = 0; i < this.dataSource.length - 1; i++) {
+          const previousTimestamp = new Date(this.dataSource[i].date_time).getTime();
+          const currentTimestamp = new Date(this.dataSource[i + 1].date_time).getTime();
+          const idleTimeInSeconds = (previousTimestamp - currentTimestamp) / 1000;
+
+          const hours = Math.floor(idleTimeInSeconds / 3600);
+          const minutes = Math.floor((idleTimeInSeconds % 3600) / 60);
+          const seconds = idleTimeInSeconds % 60;
+
+          this.dataSource[i].idle = `${hours}h ${minutes}m ${seconds}s`;
+        }
+
+        // Display only the latest 5 entries
+        this.dataSource = this.dataSource.slice(0, 5);
+      },
+      (error) => {
+        console.log("Entries Not fetched properly!");
+      }
+    );
+  }
+  */
+
+
+
+
   onToggleChange(event: any): void {
-    const topic = 'sense/live'; // Replace this with your desired topic
+    const topic = 'sense/live/12'; // Replace this with your desired topic
     const payload = event.checked ? 'on' : 'off';
     
     try {
@@ -265,37 +171,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   /*createChart() {
-    Highcharts.chart('columnChart', {  // Use the appropriate chart ID from your HTML
-      chart: {
-        type: 'column'
-      },
-      title: {
-        text: ''
-      },
-      credits: {
-        enabled: false
-      },
-      exporting: {  // Set exporting options to disable
-        enabled: false
-      },
-      xAxis: {
-        categories: ['On', 'Off']
-      },
-      yAxis: {
-        title: {
-          text: ''
-        },
-        min: 0,
-        max: 100
-      },
-      series: [{
-        name: 'Value',
-        color: 'rgba(0, 0, 255, 0.7)',
-        data: [10, 20]
-      }] as any
-    } as Highcharts.Options);
-  }*/
-  createChart() {
     this.ControlService.graph().subscribe(
       (data) => {
         const onTimeHours = Math.floor(data.on / 60);
@@ -347,6 +222,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
         } as Highcharts.Options);
       }
     );
-  }
+  }*/
 
 }

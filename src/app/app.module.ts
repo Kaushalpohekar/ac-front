@@ -11,6 +11,7 @@ import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './home/dashboard/dashboard.component';
 import { NavbarComponent } from './home/navbar/navbar.component';
 import { FooterComponent } from './home/footer/footer.component';
+import { CommonModule, DatePipe } from '@angular/common';
 
 
 const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
@@ -36,7 +37,7 @@ const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
     MqttModule.forRoot(MQTT_SERVICE_OPTIONS),
     HttpClientModule,
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

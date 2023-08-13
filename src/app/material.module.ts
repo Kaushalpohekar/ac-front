@@ -7,6 +7,7 @@ import { MatCardModule } from '@angular/material/card';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatTableModule} from '@angular/material/table';
 // Add more Material modules as needed
 
 @NgModule({
@@ -20,7 +21,8 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     FormsModule,
     ReactiveFormsModule,
     MatToolbarModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatTableModule
     // Add more Material modules as needed
   ],
   exports: [
@@ -31,7 +33,8 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     FormsModule,
     ReactiveFormsModule,
     MatToolbarModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatTableModule
     // Add more Material modules as needed
   ],
 })

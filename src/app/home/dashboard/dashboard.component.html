@@ -2,7 +2,7 @@
 
 <div class="container-fluid">
   <div class="row pt-2">
-    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-3">
+    <!-- <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-3">
       <mat-card>
         <mat-card-header class="header">
           <div class="col-12 d-flex mb-2">
@@ -33,9 +33,73 @@
         	</div>
           <div class="row pt-2">
               <div class="col-12">
-          <div id="columnChart" class="chart-container" style="height: 200px;"></div>
-        </div>
-      </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div> -->
+    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-3">
+      <mat-card>
+        <mat-card-header class="header">
+          <div class="col-12 d-flex mb-2">
+            <div class="device-title">Device Name</div>
+            <div class="ms-auto device-title">{{ currentTime$ | async }}</div>
+          </div>
+        </mat-card-header>
+        <mat-card-content class="">
+          <div class="container">
+            <div class="row pt-2">
+              <div class="col-9">
+                <div class="turn-on-off">Turn ON and OFF</div>
+              </div>
+              <div class="col-3">
+                <mat-slide-toggle class="custom-slide-toggle" [checked]="toggleButtonChecked" (change)="onToggleChange($event)"></mat-slide-toggle>
+              </div>
+            </div>
+            <div class="row pt-2">
+              <div class="col-9">
+                <div class="status">{{ Status === 'on' ? 'Device is currently ON' : 'Device is currently OFF' }}</div>
+              </div>
+              <div class="col-3">
+                <div class="led-container">
+                  <div class="led" [ngClass]="{'red': Status === 'off', 'green': Status === 'on', 'blinking': Status === 'off'}"></div>
+                </div>
+              </div>
+            </div>
+            <div class="row pt-2">
+              <div class="col-12">
+                <table mat-table [dataSource]="dataSource" style="width: 100%;" class="">
+
+                  <!--- Note that these columns can be defined in any order.
+                        The actual rendered columns are set as a property on the row definition" -->
+
+                  <!-- Position Column -->
+                  <ng-container matColumnDef="formattedDate">
+                    <th mat-header-cell *matHeaderCellDef> TimeStamp </th>
+                    <td mat-cell *matCellDef="let element"> {{element.formattedDate}} </td>
+                  </ng-container>
+
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="ledState">
+                    <th mat-header-cell *matHeaderCellDef> Status </th>
+                    <td mat-cell *matCellDef="let element"> {{element.ledState}} </td>
+                  </ng-container>
+
+                  <!-- Weight Column -->
+                  <!-- <ng-container matColumnDef="idle">
+                    <th mat-header-cell *matHeaderCellDef> Idle Time </th>
+                    <td mat-cell *matCellDef="let element"> {{element.idle}} </td>
+                  </ng-container> -->
+
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+
+            </div>
+          </div>
+          </div>
         </mat-card-content>
       </mat-card>
     </div>
