@@ -97,52 +97,41 @@ export class DashboardComponent implements OnInit, OnDestroy {
     );
   }
 
-  lastStatus() {
+  /*lastStatus() {
     this.ControlService.lastStatus().subscribe(
       (ledState) => {
         console.log(ledState);
         this.dataSource = ledState;
         this.dataSource = ledState.map((ledState: StatusData) => {
           ledState.formattedDate = this.datePipe.transform(ledState.date_time, 'MMM d y HH:mm:ss');
-          return ledState;
+          return ledState;0
         });
+        console.log();
       },
       (error) =>{
         console.log("Entries Not fetched properly!");
       }
     );
-  }
-  /*lastStatus() {
-    this.ControlService.lastStatus().subscribe(
-      (ledStateList) => {
-        // Format timestamps and calculate idle times
-        this.dataSource = ledStateList.map((ledState: StatusData) => {
-          ledState.formattedDate = this.datePipe.transform(ledState.date_time, 'MMM d y HH:mm:ss');
-          return ledState;
-        });
+  }*/
+lastStatus() {
+  this.ControlService.lastStatus().subscribe(
+    (ledState) => {
+      console.log(ledState);
+      this.dataSource = ledState;
+      this.dataSource = ledState.map((ledState: StatusData) => {
+        ledState.formattedDate = this.datePipe.transform(ledState.date_time, 'MMM d y HH:mm:ss', 'UTC');
+        return ledState;
+      });
+      console.log();
+    },
+    (error) => {
+      console.log("Entries Not fetched properly!");
+    }
+  );
+}
 
-        // Calculate and format idle times
-        for (let i = 0; i < this.dataSource.length - 1; i++) {
-          const previousTimestamp = new Date(this.dataSource[i].date_time).getTime();
-          const currentTimestamp = new Date(this.dataSource[i + 1].date_time).getTime();
-          const idleTimeInSeconds = (previousTimestamp - currentTimestamp) / 1000;
 
-          const hours = Math.floor(idleTimeInSeconds / 3600);
-          const minutes = Math.floor((idleTimeInSeconds % 3600) / 60);
-          const seconds = idleTimeInSeconds % 60;
-
-          this.dataSource[i].idle = `${hours}h ${minutes}m ${seconds}s`;
-        }
-
-        // Display only the latest 5 entries
-        this.dataSource = this.dataSource.slice(0, 5);
-      },
-      (error) => {
-        console.log("Entries Not fetched properly!");
-      }
-    );
-  }
-  */
+  
 
 
 
