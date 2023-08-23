@@ -8,7 +8,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatTableModule} from '@angular/material/table';
-// Add more Material modules as needed
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {MatDialogModule} from '@angular/material/dialog';
+
 
 @NgModule({
   declarations: [],
@@ -22,7 +26,11 @@ import {MatTableModule} from '@angular/material/table';
     ReactiveFormsModule,
     MatToolbarModule,
     MatSlideToggleModule,
-    MatTableModule
+    MatTableModule,
+    MatPaginatorModule,
+    MatSelectModule,
+    MatSnackBarModule,
+    MatDialogModule
     // Add more Material modules as needed
   ],
   exports: [
@@ -34,7 +42,11 @@ import {MatTableModule} from '@angular/material/table';
     ReactiveFormsModule,
     MatToolbarModule,
     MatSlideToggleModule,
-    MatTableModule
+    MatTableModule,
+    MatPaginatorModule,
+    MatSelectModule,
+    MatSnackBarModule,
+    MatDialogModule
     // Add more Material modules as needed
   ],
 })

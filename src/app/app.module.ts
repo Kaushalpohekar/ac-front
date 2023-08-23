@@ -12,6 +12,11 @@ import { DashboardComponent } from './home/dashboard/dashboard.component';
 import { NavbarComponent } from './home/navbar/navbar.component';
 import { FooterComponent } from './home/footer/footer.component';
 import { CommonModule, DatePipe } from '@angular/common';
+import { TimepickerModule } from 'ngx-bootstrap/timepicker';
+import { EditScheduleComponent } from './home/edit-schedule/edit-schedule.component';
+import { DeleteScheduleComponent } from './home/delete-schedule/delete-schedule.component';
+import { DevicedisconnectComponent } from './home/devicedisconnect/devicedisconnect.component';
+
 
 
 const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
@@ -27,7 +32,10 @@ const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
     LoginComponent,
     DashboardComponent,
     NavbarComponent,
-    FooterComponent
+    FooterComponent,
+    EditScheduleComponent,
+    DeleteScheduleComponent,
+    DevicedisconnectComponent
   ],
   imports: [
     BrowserModule,
@@ -35,6 +43,7 @@ const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
     BrowserAnimationsModule,
     MaterialModule,
     MqttModule.forRoot(MQTT_SERVICE_OPTIONS),
+    TimepickerModule.forRoot(),
     HttpClientModule,
   ],
   providers: [DatePipe],

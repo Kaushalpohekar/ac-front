@@ -13,7 +13,7 @@ export class ControlService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  //private readonly API_URL = 'http://ec2-65-2-125-202.ap-south-1.compute.amazonaws.com:3000';
+  //private readonly API_URL = 'http://localhost:3000';
   private readonly API_URL = 'http://13.127.239.199:3000';
 
   login(loginData: any): Observable<any> {
@@ -38,11 +38,27 @@ export class ControlService {
   }
 
   graph(): Observable<any> {
-    return this.http.get(`${this.API_URL}/time`);
+    return this.http.get(`${this.API_URL}/graph`);
   }
 
   lastStatus(): Observable<any> {
     return this.http.get(`${this.API_URL}/OnOffStatus`);
+  }
+
+  schedule(): Observable<any> {
+    return this.http.get(`${this.API_URL}/schedule`);
+  }
+
+  addSchedule(scheduleData: any): Observable<any> {
+    return this.http.post(`${this.API_URL}/add-schedule`, scheduleData);
+  }
+
+  editSchedule(id:string, scheduleData: any): Observable<any> {
+    return this.http.put(`${this.API_URL}/edit-schedule/${id}`, scheduleData);
+  }
+
+  deleteSchedule(id:string){
+    return this.http.delete(`${this.API_URL}/delete-schedule/${id}`);
   }
 
   logout(): void {

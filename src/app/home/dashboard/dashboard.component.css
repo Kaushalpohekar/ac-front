@@ -1,3 +1,27 @@
+.dashboard{
+  padding-top: 12vh;
+  padding-bottom: 5vh;
+}
+
+@media (min-width: 576px) and (max-width:979px){
+  .dashboard{
+    padding-top: 17vh;
+  }
+}
+
+.Schedule-time{
+  font-size: 1rem;
+  font-weight: 550;
+}
+
+.form-width{
+  width: 100%;
+}
+.schedule-button{
+  width: 100%;
+  z-index: 0;
+}
+
 .device-title {
   font-size: 13px;
   font-weight: 600;

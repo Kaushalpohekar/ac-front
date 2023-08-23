@@ -1,0 +1,36 @@
+<div class="container-fluid">
+	<div class="row edit-head mb-2">
+    <div class="col-lg-12 col-md-12 col-sm-12 pt-1">
+      <div class="edit-title">Edit - Schedule</div>
+    </div>
+	</div>
+  <div class="row">
+  	<form [formGroup]="form">
+	    <div class="col-6">
+	      <mat-form-field class="form-width">
+	        <mat-label>Select Start Time</mat-label>
+	        <mat-select formControlName="startTime" required>
+	          <mat-option *ngFor="let time of timeOptions" [value]="time">{{ time }}</mat-option>
+	        </mat-select>
+	      </mat-form-field>
+	    </div>
+	    <div class="col-6">
+	      <mat-form-field class="form-width">
+	        <mat-label>Select End Time</mat-label>
+	        <mat-select formControlName="endTime" required>
+	          <mat-option *ngFor="let time of timeOptions" [value]="time">{{ time }}</mat-option>
+	        </mat-select>
+	      </mat-form-field>
+	    </div>
+	    <div class="col-12">
+	      <mat-error *ngIf="form.hasError('timeRangeError')" class="error-message">End time must be after start time.</mat-error>
+	    </div>
+	    <div class="col-12 d-flex mb-2">
+	      <button mat-raised-button (click)="onNoClick()">Close</button>
+	      <div class="ms-auto">
+		      <button mat-raised-button color="primary" (click)="onSaveClick()">Save</button>
+		  </div>
+	    </div>
+	</form>
+  </div>
+</div>

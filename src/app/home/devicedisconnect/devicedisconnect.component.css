@@ -1,0 +1,40 @@
+
+    .dialog-container {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .icon {
+      font-size: 60px;
+      color: #e53935;
+    }
+
+    .title {
+      font-size: 24px;
+      margin: 16px 0;
+      color: #333;
+    }
+
+    .message {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 20px;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }

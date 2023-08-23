@@ -3,6 +3,8 @@
   justify-content: space-between;
   align-items: center;
   background-color: #337031;
+  position: fixed;
+  z-index: 1;
 }
 
 .navbar-logo {
