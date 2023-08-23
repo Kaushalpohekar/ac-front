@@ -157,7 +157,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         console.log(ledState);
         this.dataSource = ledState;
         this.dataSource = ledState.map((ledState: StatusData) => {
-          ledState.formattedDate = this.datePipe.transform(ledState.date_time, 'MMM d y HH:mm:ss', 'IST');
+          ledState.formattedDate = this.datePipe.transform(ledState.date_time, 'MMM d y HH:mm:ss', 'UTC');
           return ledState;
         });
         console.log();
