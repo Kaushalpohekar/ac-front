@@ -17,7 +17,7 @@ import { EditScheduleComponent } from './home/edit-schedule/edit-schedule.compon
 import { DeleteScheduleComponent } from './home/delete-schedule/delete-schedule.component';
 import { DevicedisconnectComponent } from './home/devicedisconnect/devicedisconnect.component';
 
-
+import { HashLocationStrategy,LocationStrategy } from '@angular/common';
 
 const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   hostname: 'broker.emqx.io',
@@ -46,7 +46,7 @@ const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
     TimepickerModule.forRoot(),
     HttpClientModule,
   ],
-  providers: [DatePipe],
+  providers: [DatePipe,{provide : LocationStrategy , useClass : HashLocationStrategy}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
