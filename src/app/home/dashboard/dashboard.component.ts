@@ -182,7 +182,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   onToggleChange(event: any): void {
-    const topic = 'sense/live/test'; // Replace this with your desired topic
+    const topic = 'sense/live'; // Replace this with your desired topic
     const payload = event.checked ? 'on' : 'off';
     
     try {
